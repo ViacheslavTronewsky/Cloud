@@ -1,0 +1,20 @@
+aws ec2 create-vpc --cidr-block 10.0.0.0/16
+
+aws ec2 create-subnet --vpc-id vpc-0c4cd2def1e4b675e --cidr-block 10.0.11.0/24
+aws ec2 create-subnet --vpc-id vpc-0c4cd2def1e4b675e --cidr-block 10.0.0.0/24
+
+aws ec2 create-internet-gateway
+aws ec2 attach-internet-gateway --vpc-id vpc-0c4cd2def1e4b675e --internet-gateway-id igw-068379fca60ac96f6
+
+aws ec2 create-route-table --vpc-id vpc-0c4cd2def1e4b675e
+aws ec2 create-route --route-table-id rtb-06b056053b00958ad --destination-cidr-block 0.0.0.0/0 --gateway-id igw-068379fca60ac96f6
+
+aws ec2 associate-route-table  --subnet-id subnet-0a843c5921c731e0e --route-table-id rtb-06b056053b00958ad
+aws ec2 modify-subnet-attribute --subnet-id subnet-0a843c5921c731e0e --map-public-ip-on-launch
+
+aws ec2 create-security-group --group-name SSHAccess --description "Security group for SSH access" --vpc-id vpc-0c4cd2def1e4b675e
+aws ec2 authorize-security-group-ingress --group-id sg-0f400f82a206e0e94 --protocol tcp --port 22 --cidr 0.0.0.0/0
+
+aws ec2 run-instances --image-id ami-04bf6dcdc9ab498ca --count 1 --instance-type t2.micro --key-name MyKeyPair --security-group-ids sg-0f400f82a206e0e94 --subnet-id subnet-0a843c5921c731e0e
+
+ssh 3.231.161.164
