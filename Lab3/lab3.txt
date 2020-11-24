@@ -9,10 +9,10 @@ aws ec2 modify-subnet-attribute --subnet-id subnet-849220a5 --map-public-ip-on-l
 
 aws ec2 run-instances --image-id ami-04bf6dcdc9ab498ca --count 1 --instance-type t2.micro --key-name MyKeyPair  --security-group-ids sg-0e228b9c5191aa117 --subnet-id subnet-849220a5 --user-data file://user-data.sh --name "Lab3"
 
-aws ec2 create-tags --resources i-0315a09d73ede8221 --tags Key=Role,Value=WebServer
+aws ec2 create-tags --resources i-01ab8fdedb4fb2805 --tags Key=Role,Value=WebServer
 
-aws ec2 create-image --instance-id i-0315a09d73ede8221 --name "Lab3"
+aws ec2 create-image --instance-id i-01ab8fdedb4fb2805 --name "Lab3"
 
-aws ec2 stop-instances --instance-ids i-0315a09d73ede8221
+aws ec2 stop-instances --instance-ids i-01ab8fdedb4fb2805
 
-aws ec2 create-image --instance-id i-04f09ffed3ce89fe2 --name "practice-3-image" --description "Lab3"
+aws ec2 create-image --instance-id i-01ab8fdedb4fb2805 --name "practice-3-image" --description "Lab3"
